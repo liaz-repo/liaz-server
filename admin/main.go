@@ -1,9 +1,7 @@
 package main
 
-import fmt
+import "core/cmd"
 
 func main() {
-	fmt.Printf("hello, world!")
+	cmd.Execute("liaz-admin")
 }
-
-
