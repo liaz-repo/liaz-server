@@ -1,6 +1,9 @@
 package system
 
 import (
+	"github.com/gin-gonic/gin"
+	"github.com/go-xorm/xorm"
+	"github.com/minio/minio-go/v7"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/config_client"
 	"github.com/sirupsen/logrus"
 )
@@ -10,6 +13,9 @@ type Application struct {
 	name          string
 	iConfigClient config_client.IConfigClient
 	logger        *logrus.Logger
+	xormEngine    *xorm.Engine
+	minioClient   *minio.Client
+	ginEngine     *gin.Engine
 }
 
 func SetEnv(env string) {
@@ -50,6 +56,36 @@ func SetLogger(logger *logrus.Logger) {
 
 func GetLogger() *logrus.Logger {
 	return application.logger
+}
+
+func SetXormEngine(engine *xorm.Engine) {
+	if application.xormEngine == nil {
+		application.xormEngine = engine
+	}
+}
+
+func GetXormEngine() *xorm.Engine {
+	return application.xormEngine
+}
+
+func SetMinioClient(client *minio.Client) {
+	if application.minioClient == nil {
+		application.minioClient = client
+	}
+}
+
+func GetMinioClient() *minio.Client {
+	return application.minioClient
+}
+
+func SetGinEngine(engine *gin.Engine) {
+	if application.ginEngine == nil {
+		application.ginEngine = engine
+	}
+}
+
+func GetGinEngine() *gin.Engine {
+	return application.ginEngine
 }
 
 var application = new(Application)

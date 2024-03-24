@@ -3,8 +3,11 @@ package config
 import "core/system"
 
 type Config struct {
-	Nacos  *Nacos  `mapstructure:""`
-	Logger *Logger `yaml:"logger"`
+	Nacos    *Nacos    `mapstructure:""`
+	Logger   *Logger   `yaml:"logger"`
+	Dasebase *Database `yaml:"database"`
+	Minio    *Minio    `yaml:"minio"`
+	Server   *Server   `yaml:"server"`
 }
 
 var SystemConfig = new(Config)
@@ -25,4 +28,10 @@ func Setup() {
 	SystemConfig.Nacos.Init()
 	//日志
 	SystemConfig.Logger.Init()
+	//数据库
+	SystemConfig.Dasebase.Init()
+	//文件储存
+	SystemConfig.Minio.Init()
+	//http
+	SystemConfig.Server.Init()
 }

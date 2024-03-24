@@ -3,9 +3,11 @@ package cmd
 import (
 	"core/config"
 	"core/system"
+	"core/web"
 	"errors"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -41,6 +43,7 @@ func init() {
 
 func run() {
 	setupConfig()
+	startServer()
 }
 
 func setupConfig() {
@@ -50,6 +53,23 @@ func setupConfig() {
 		system.SetName(name)
 	}
 	config.Setup()
+}
+
+func startServer() {
+	server := config.SystemConfig.Server
+	if server == nil {
+		return
+	}
+	fmt.Println("Start server...")
+	engine := system.GetGinEngine()
+	//初始化
+	web.InitRouter(engine)
+	//端口
+	port := strconv.Itoa(server.Port)
+	if len(port) > 0 {
+		os.Setenv("PORT", port)
+	}
+	engine.Run()
 }
 
 func Execute(applicationName string) {
