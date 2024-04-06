@@ -8,6 +8,8 @@ type Config struct {
 	Dasebase *Database `yaml:"database"`
 	Minio    *Minio    `yaml:"minio"`
 	Server   *Server   `yaml:"server"`
+	Redis    *Redis    `yaml:"redis"`
+	Security *Security `yaml:"security"`
 }
 
 var SystemConfig = new(Config)
@@ -30,6 +32,8 @@ func Setup() {
 	SystemConfig.Logger.Init()
 	//数据库
 	SystemConfig.Dasebase.Init()
+	//缓存
+	SystemConfig.Redis.Init()
 	//文件储存
 	SystemConfig.Minio.Init()
 	//http

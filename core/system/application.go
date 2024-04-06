@@ -5,6 +5,7 @@ import (
 	"github.com/go-xorm/xorm"
 	"github.com/minio/minio-go/v7"
 	"github.com/nacos-group/nacos-sdk-go/v2/clients/config_client"
+	"github.com/redis/go-redis/v9"
 	"github.com/sirupsen/logrus"
 )
 
@@ -16,6 +17,7 @@ type Application struct {
 	xormEngine    *xorm.Engine
 	minioClient   *minio.Client
 	ginEngine     *gin.Engine
+	redisClient   *redis.Client
 }
 
 func SetEnv(env string) {
@@ -86,6 +88,16 @@ func SetGinEngine(engine *gin.Engine) {
 
 func GetGinEngine() *gin.Engine {
 	return application.ginEngine
+}
+
+func SetRedisClient(client *redis.Client) {
+	if application.redisClient == nil {
+		application.redisClient = client
+	}
+}
+
+func GetRedisClient() *redis.Client {
+	return application.redisClient
 }
 
 var application = new(Application)
